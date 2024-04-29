@@ -1,7 +1,19 @@
+from dataclasses import dataclass
+
 import equinox as eqx 
 import jax 
 
-class Transformer(eqx.Module): 
+@dataclass 
+class GPTConfig: 
+  block_size: int = 1024
+  vocab_size: int = 50304 
+  n_layer: int = 12
+  n_head: int = 12
+  n_embd: int = 768
+  dropout: float = 0.0
+  bias: bool = True
+
+class GPT(eqx.Module): 
   weight: jax.Array
   bias: jax.Array
 
@@ -11,9 +23,4 @@ class Transformer(eqx.Module):
   def __call__(self, x): 
     return x
 
-@jax.jit
-@jax.grad
-def loss_fn(model, x, y): 
-  pred_y = jax.vmap(model)(x)
-  return jax.numpy.mean((y - pred_y) ** 2);
   
