@@ -3,6 +3,11 @@ from dataclasses import dataclass
 import equinox as eqx 
 import eqx.nn as nn
 import jax 
+from dataclasses import dataclass 
+
+@dataclass
+class TransformerConfig:
+  n_embd: int = 64
 
 class Head(eqx.Module):
   key: eqx.Module 
